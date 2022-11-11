@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/48390f9a-973a-4121-a961-b40eaedb374c/AppServices/subscriptions/48390f9a-973a-4121-a961-b40eaedb374c/resourceGroups/resource-group/providers/Microsoft.Web/sites/tech-conference",
+    "appService.deploySubpath": "."
+}
