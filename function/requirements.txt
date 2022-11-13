@@ -4,3 +4,4 @@
 
 azure-functions
 psycopg-binary==3.1.4
+sendgrid==6.3.0

@@ -21,15 +21,16 @@ def main(msg: func.ServiceBusMessage):
         # TODO: Get attendees email and name
         cursor.execute("SELECT first_name, email FROM attendee;")
         attendees = cursor.fetchall()
-        attendees_no = str(cursor.rowcount)
+        
 
         # TODO: Loop through each attendee and send an email with a personalized subject
         for attendee in attendees:
-            Mail('{}, {}, {}'.format({'info@techconf.com'}, {attendee[1]}, {notification}))
-            notified_count = 'Notified {} attendees'.format(len(attendees))
+            Mail('{}, {}, {}'.format({'admin@techconf.com'}, {attendee[1]}, {notification}))
+        notificationDate = datetime.utcnow()
+        notificationInfo = 'Notified {} attendees'.format(len(attendees))
 
         # TODO: Update the notification table by setting the completed date and updating the status with the total number of attendees notified
-        cursor.execute("UPDATE notification SET status = %s, completed_date = %s WHERE id = %s;", (notified_count, datetime.utcnow(), notification_id))
+        update_query = cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notificationInfo, notificationDate, notification_id))
 
 
     except (Exception, psycopg2.DatabaseError) as error:
