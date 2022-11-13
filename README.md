@@ -71,4 +71,6 @@ Complete a month cost analysis of each Azure resource to give an estimate total 
 | *Total Cost*       |     | $25.37 |
 
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+
+The TechConf website is deployed to an azure app service that is considered easy to configure and use, along with the ability to scale up and out if needed. Also, the website can send a notification email to multiple recipients without disturbing the website's performance for the user using the service bus queue trigger function, which performs in the website's background.
+The azure app service and the service bus queue trigger function are the best solution for this website to make it cost-effective since it just needs to pay for the time that the app runs.
