@@ -26,14 +26,16 @@ def main(msg: func.ServiceBusMessage):
         # TODO: Loop through each attendee and send an email with a personalized subject
         for attendee in attendees:
             Mail('{}, {}, {}'.format({'info@techconf.com'}, {attendee[1]}, {notification}))
+            notified_count = 'Notified {} attendees'.format(len(attendees))
 
         # TODO: Update the notification table by setting the completed date and updating the status with the total number of attendees notified
-        cursor.execute("UPDATE notification SET status = %s, completed_date = %s WHERE id = %s;", ("Notified {} attendees".format(attendees_no), datetime.utcnow(), notification_id))
-        conn.commit()
+        cursor.execute("UPDATE notification SET status = %s, completed_date = %s WHERE id = %s;", (notified_count, datetime.utcnow(), notification_id))
+
 
     except (Exception, psycopg2.DatabaseError) as error:
         logging.error(error)
     finally:
         # TODO: Close connection
+        conn.commit()
         cursor.close()
         conn.close()
