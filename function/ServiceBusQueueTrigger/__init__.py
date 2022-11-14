@@ -16,21 +16,21 @@ def main(msg: func.ServiceBusMessage):
     cursor = conn.cursor()
     try:
         # TODO: Get notification message and subject from database using the notification_id
-        cursor.execute("SELECT message, subject FROM notification WHERE id=%s;", notification_id)
-        notification = cursor.fetchone()
+        notification = cursor.execute("SELECT message, subject FROM notification WHERE id={};".format(notification_id))
+        
         # TODO: Get attendees email and name
-        cursor.execute("SELECT first_name, email FROM attendee;")
+        cursor.execute("SELECT first_name, last_name, email FROM attendee;")
         attendees = cursor.fetchall()
         
 
         # TODO: Loop through each attendee and send an email with a personalized subject
         for attendee in attendees:
-            Mail('{}, {}, {}'.format({'admin@techconf.com'}, {attendee[1]}, {notification}))
-        notificationDate = datetime.utcnow()
-        notificationInfo = 'Notified {} attendees'.format(len(attendees))
+            Mail('{}, {}, {}'.format({'info@techconf.com'}, {attendee[2]}, {notification}))
+        nDate = datetime.utcnow()
+        notified = 'Notified {} attendees'.format(len(attendees))
 
         # TODO: Update the notification table by setting the completed date and updating the status with the total number of attendees notified
-        update_query = cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notificationInfo, notificationDate, notification_id))
+        cursor.execute("UPDATE notification SET status = '{}', completed_date = '{}' WHERE id = {};".format(notified, nDate, notification_id))
         conn.commit()
 
     except (Exception, psycopg2.DatabaseError) as error:
